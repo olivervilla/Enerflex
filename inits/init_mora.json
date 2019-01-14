@@ -1,0 +1,148 @@
+{
+    "host": "187.217.207.73",
+    "pozos":[
+        {
+            "nombre": "Cardenas 807",
+            "compresoras": ["V-3066", "V-3095"],
+            "id_dispositivos": {"PLC1": 1, "BR20": 2, "PLC2": 3},
+            "id_sensores": {"ptr": 1, "ptp": 2, "pld": 3, "ttp": 4},
+            "br20_normal": null,
+            "ip": "142.183.3.16",
+            "ip_br20": null,
+            "tout" : 10,
+            "topic": "/1234/142.183.3.16/attrs"
+        },
+        {
+            "nombre": "Mora 1",
+            "compresoras": ["V-3066", "V-3095"],
+            "id_dispositivos": {"PLC1": 1, "BR20": 2, "PLC2": 3},
+            "id_sensores": {"ptr": 2, "ptp": 1, "pld": 3, "ttp": null},
+            "br20_normal": null,
+            "ip": "142.183.3.15",
+            "ip_br20": null,
+            "tout" : 15,
+            "topic": "/1234/142.183.3.15/attrs"
+        },
+        {
+            "nombre": "Mora 2",
+            "compresoras": ["V-3079"],
+            "id_dispositivos": {"PLC1": 1, "BR20": 2, "PLC2": null},
+            "id_sensores": {"ptr": 2, "ptp": 1, "pld": 3, "ttp": null}, 
+            "br20_normal": null,
+            "ip": "142.183.3.14",
+            "ip_br20": null,
+            "tout" : 15,
+            "topic": "/1234/142.183.3.14/attrs"
+        },
+        {
+            "nombre": "Cardenas 129",
+            "compresoras": ["V-3119", "V-3083"],
+            "id_dispositivos": {"PLC1": 1, "BR20": 2, "PLC2": 3},
+            "id_sensores": {"ptr": 1, "ptp": 2, "pld": 3, "ttp": 4},
+            "br20_normal": null,
+            "ip": "142.183.3.13",
+            "ip_br20": null,
+            "tout" : 10,
+            "topic": "/1234/142.183.3.13/attrs"
+        },
+        {
+            "nombre": "Cardenas 539",
+            "compresoras": ["V-3078"],
+            "id_dispositivos": {"PLC1": 1, "BR20": 2, "PLC2": null},
+            "id_sensores": {"ptr": 1, "ptp": 2, "pld": 3, "ttp": 4},
+            "br20_normal": true,
+            "ip": "142.183.3.10",
+            "ip_br20": null,
+            "tout" : 10,
+            "topic": "/1234/142.183.3.10(1)/attrs"
+        },
+        {
+            "nombre": "Cardenas 137",
+            "compresoras": ["V-3044", "V-4975"],
+            "id_dispositivos": {"PLC1": 1, "BR20": 2, "PLC2": 3},
+            "id_sensores": {"ptr": 1, "ptp": 2, "pld": 3, "ttp": 4},
+            "br20_normal": null,
+            "ip": "142.183.3.12",
+            "ip_br20": null,
+            "tout" : 10,
+            "topic": "/1234/142.183.3.12/attrs"
+        },
+        {
+            "nombre": "Cardenas 109",
+            "compresoras": ["V-3092", "V-3094"],
+            "id_dispositivos": {"PLC1": 1, "BR20": 2, "PLC2": 3},
+            "id_sensores": {"ptr": 1, "ptp": 2, "pld": 3, "ttp": 4},
+            "br20_normal": null,
+            "ip": "142.183.3.11",
+            "ip_br20": null,
+            "tout" : 15,
+            "topic": "/1234/142.183.3.11/attrs"
+        },
+        {
+            "nombre": "Cardenas 439",
+            "compresoras": ["V-3111"],
+            "id_dispositivos": {"PLC1": 3, "BR20": 2, "PLC2": null},
+            "id_sensores": {"ptr": 5, "ptp": 6, "pld": 7, "ttp": 8},
+            "br20_normal": false,
+            "ip": "142.183.3.10",
+            "ip_br20": null,
+            "tout" : 10,
+            "topic": "/1234/142.183.3.10(2)/attrs"
+        },
+        {
+            "nombre": "Cardenas 139",
+            "compresoras": ["V-4977", "V-2944"],
+            "id_dispositivos": {"PLC1": 1, "BR20": 2, "PLC2": 3},
+            "id_sensores": {"ptr": 1, "ptp": 2, "pld": 3, "ttp": null},
+            "br20_normal": null,
+            "ip": "142.183.3.18",
+            "ip_br20": null,
+            "tout" : 40,
+            "topic": "/1234/cardenas139/attrs"
+        },
+        {
+            "nombre": "Eden 21",
+            "compresoras": ["V-3028"],
+            "id_dispositivos": {"PLC1": 1, "BR20": 2, "PLC2": null},
+            "id_sensores": {"ptp": 1, "ptr": 2, "pld": 3, "ttp": 4},
+            "br20_normal": null,
+            "ip": "142.183.3.77",
+            "ip_br20": null,
+            "tout" : 15,
+            "topic": "/1234/142.183.3.77/attrs"
+        },
+        {
+            "nombre": "Tupilco 93 T",
+            "compresoras": ["V-3053"],
+            "ip": "142.183.3.73",
+            "ip_br20": null,
+            "id_dispositivos": {"PLC1": 1, "BR20": 2, "PLC2": null},
+            "id_sensores": {"ptr": 1, "ptp": 2, "pld": 3, "ttp": null},
+            "br20_normal": null                                                                                                                                                                                                                                                                                                                                                                             ,
+            "tout" : 20,
+            "topic": "/1234/142.183.3.73/attrs"
+        },
+        {
+            "nombre": "Yagual 12-1",
+            "compresoras": ["V-4791"],
+            "ip": "142.183.3.80",
+            "ip_br20": null,
+            "id_dispositivos": {"PLC1": 1, "BR20": 2, "PLC2": null},
+            "id_sensores": {"ptp": 1, "ptr": 2, "pld": 3, "ttp": 4},
+            "br20_normal": null,
+            "tout" : 10,
+            "topic": "/1234/142.183.3.80(1)/attrs"
+        },
+        {
+            "nombre": "Yagual 12-2",
+            "compresoras": ["V-3107"],
+            "ip": "142.183.3.80",
+            "ip_br20": null,
+            "id_dispositivos": {"PLC1": 3, "BR20": 2, "PLC2": null},
+            "id_sensores": {"ptp": 1, "ptr": 2, "pld": 3, "ttp": 4},
+            "br20_normal": null,
+            "tout" : 10,
+            "topic": "/1234/142.183.3.80(2)/attrs"
+        }
+	]
+}

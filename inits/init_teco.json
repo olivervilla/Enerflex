@@ -1,0 +1,137 @@
+{
+    "host": "187.217.207.73",
+    "pozos":[
+        {
+            "nombre": "Jujo 38",
+            "compresoras": ["V-3090"],
+            "ip": "142.235.10.113",
+            "ip_br20": null,
+            "id_dispositivos": {"PLC1": 1, "BR20": 2, "PLC2": null},
+            "id_sensores": {"ptr": 1, "ptp": 2, "pld": 3, "ttp": null},
+            "br20_normal": null,
+            "tout" : 30,
+            "topic": "/1234/142.235.10.113/attrs"
+        },
+        {
+            "nombre": "Teco 525-3",
+            "compresoras": ["V-3058"],
+            "ip": "142.235.10.21",
+            "ip_br20": null,
+            "id_dispositivos": {"PLC1": null, "BR20": 2, "PLC2": 1},
+            "id_sensores": {"ptr": 1, "ptp": 2, "pld": 3, "ttp": 4},
+            "br20_normal": null,
+            "tout" : 20,
+            "topic": "/1234/142.235.10.21/attrs"
+        },
+        {
+            "nombre": "Jujo 52A",
+            "compresoras": ["V-3104", "V-3065"],
+            "ip": "142.235.10.111",
+            "ip_br20": null,
+            "id_dispositivos": {"PLC1": 1, "BR20": null, "PLC2": 2},
+            "id_sensores": {"ptr": 1, "ptp": 2, "pld": 3, "ttp": 4},
+            "br20_normal": null,
+            "tout" : 30,
+            "topic": "/1234/142.235.10.111/attrs"
+        },
+        {
+            "nombre": "Jujo 532-1",
+            "compresoras": ["V-3077"],
+            "ip": "142.235.10.143",
+            "ip_br20": null,
+            "id_dispositivos": {"PLC1": 1, "BR20": 2, "PLC2": null},
+            "id_sensores": {"ptr": 1, "ptp": 2, "pld": 3, "ttp": null},
+            "br20_normal": null,
+            "tout" : 30,
+            "topic": "/1234/142.235.10.143/attrs"
+        },
+        {
+            "nombre": "Teco 446",
+            "compresoras": ["V-3088"],
+            "ip": "142.235.10.127",
+            "ip_br20": null,
+            "id_dispositivos": {"PLC1": 4, "BR20": 2, "PLC2": null},
+            "id_sensores": {"ptr": 5, "ptp": 6, "pld": 7, "ttp": null},
+            "br20_normal": false,
+            "tout" : 30,
+            "topic": "/1234/142.235.10.127/attrs"
+        },
+        {
+            "nombre": "Teco 628",
+            "compresoras": ["V-3114","V-3102"],
+            "ip": "142.235.10.127",
+            "ip_br20": null,
+            "id_dispositivos": {"PLC1": 1, "BR20": 2, "PLC2": 3},
+            "id_sensores": {"ptr": 1, "ptp": 2, "pld": 3, "ttp": 4},
+            "br20_normal": true,
+            "tout" : 30,
+            "topic": "/1234/142.235.10.127(2)/attrs"
+        },
+        {
+            "nombre": "Teco 105-1",
+            "compresoras": ["V-3091","V-3099"],
+            "ip": "142.235.10.141",
+            "ip_br20": null,
+            "id_dispositivos": {"PLC1": 1, "BR20": 2, "PLC2": 3},
+            "id_sensores": {"ptr": 1, "ptp": 2, "pld": 3, "ttp": 4},
+            "br20_normal": null,
+            "tout" : 30,
+            "topic": "/1234/142.235.10.141/attrs"
+        },
+        {
+            "nombre": "Jujo 2",
+            "compresoras": ["V-3098"],
+            "ip": "142.235.10.3",
+            "ip_br20": null,
+            "id_dispositivos": {"PLC1": 1, "BR20": null, "PLC2": null},
+            "id_sensores": {"ptr": 1, "ptp": 2, "pld": 3, "ttp": 4},
+            "br20_normal": null,
+            "tout" : 30,
+            "topic": "/1234/142.235.10.3/attrs"
+        },
+        {
+            "nombre": "Teco 101B",
+            "compresoras": ["V-3103"],
+            "ip": "142.235.10.91",
+            "ip_br20": null,
+            "id_dispositivos": {"PLC1": 1, "BR20": 3, "PLC2": null},
+            "id_sensores": {"ptr": 1, "ptp": 2, "pld": 3, "ttp": 4},
+            "br20_normal": null,
+            "tout" : 30,
+            "topic": "/1234/142.235.10.91/attrs"
+        },
+        {
+            "nombre": "Jujo 543",
+            "compresoras": ["V-4908","V-4779"],
+            "ip": "142.235.10.81",
+            "ip_br20": null,
+            "id_dispositivos": {"PLC1": 1, "BR20": 2, "PLC2": 3},
+            "id_sensores": {"ptr": 1, "ptp": 2, "pld": 3, "ttp": null},
+            "br20_normal": null,
+            "tout" : 30,
+            "topic": "/1234/142.235.10.81/attrs"
+        },
+        {
+            "nombre": "Teco 807",
+            "compresoras": ["V-3059", "V-4753"],
+            "ip": "142.235.10.125",
+            "ip_br20": null,
+            "id_dispositivos": {"PLC1": 1, "BR20": 2, "PLC2": 3},
+            "id_sensores": {"ptr": 1, "ptp": 2, "pld": 3, "ttp": 4},
+            "br20_normal": null,
+            "tout" : 30,
+            "topic": "/1234/142.235.10.125/attrs"
+        },
+        {
+            "nombre": "Teco 566A",
+            "compresoras": ["V-3113"],
+            "ip": "142.235.10.100",
+            "ip_br20": null,
+            "id_dispositivos": {"PLC1": 1, "BR20": 2, "PLC2": null},
+            "id_sensores": {"ptr": 1, "ptp": 2, "pld": 3, "ttp": null},
+            "br20_normal": null,
+            "tout" : 30,
+            "topic": "/1234/142.235.10.100/attrs"
+        }
+    ]
+}
