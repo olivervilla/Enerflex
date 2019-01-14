@@ -1,0 +1,7 @@
+*.db
+*.zip
+*.pyc
+backup/
+data/
+logs/
+init.json
