@@ -1,5 +1,8 @@
 # coding=utf-8
 from threading import Thread
+from enviroment import Address
+import cleaner
+import schedule
 import sqlite3
 import tcp
 import time
@@ -7,9 +10,6 @@ import json
 import sys
 import os
 
-
-path = os.path.realpath(__file__)
-path = path[:path.find('main.py')]
 
 man = """
 Uso:
@@ -25,7 +25,7 @@ Opciones:
 """
 
 def initialize():
-    db = sqlite3.connect(path + 'enerflex.db', )
+    db = sqlite3.connect(Address.DATABASE_FOLDER, )
     c = db.cursor()
     sql = """CREATE TABLE IF NOT EXISTS time_operation('id' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 'name' TEXT UNIQUE NOT NULL, 
             'limitTime' INTEGER, 'onlineTime' INTEGER, 'actualTime' INTEGER, 'startTime' INTEGER, 'isOnline' INTEGER)"""
@@ -38,14 +38,11 @@ def initialize():
     db.commit()
     db.close()
 
-def update_times_well():
-    db = sqlite3.connect(path + 'enerflex.db', )
-    c = db.cursor()
 
 def read_info():
     list_pozos = list()
     try:
-        with open(path + "init.json", "r") as f:
+        with open(Address.MAIN_FOLDER + "init.json", "r") as f:
             repo = json.load(f)
             host = str(repo["host"])
             for pozo in repo["pozos"]:
@@ -87,14 +84,12 @@ def read_info():
                                   tout=tm_out,
                                   get_etm=etm)
                 list_pozos.append(p)
-                
-                if nombre == 'Cardenas 439' or nombre == 'Cardenas 539':
-                    time.sleep(1)
         print('')
         return list_pozos
 
     except Exception as e:
         print('main', e)
+
 
 def routine_each(list_pozos, minutes):
     while True:
@@ -105,10 +100,12 @@ def routine_each(list_pozos, minutes):
 			time.sleep(minutes*60)
 		print('One full turn')
 
+
 def routine_thread(list_pozos):
     for p in list_pozos:
         h = Thread(name="Pozo {}".format(p._name), target=p.run_loop)
         h.start()
+
 
 def routine_groups(list_pozos, seconds):
     middle = int(round(len(list_pozos)/2))
@@ -144,9 +141,23 @@ def routine_groups(list_pozos, seconds):
         print('Wait for g1\n')
         time.sleep(seconds)
 
+
+def scheduler_cleaner_init(list_pozos):
+    schedule.every(4).hours.do(cleaner.clean_backup)
+    schedule.every(4).hours.do(cleaner.clean_data)
+    schedule.every(4).hours.do(cleaner.clean_logs)
+    schedule.every(4).hours.do(cleaner.clean_database, list_pozos)
+
+    print('Testing...')
+    while True:
+        schedule.run_pending()
+        time.sleep(5)
+    
+
 if __name__ == '__main__':
     # init
     initialize()
+    
 
     howmany = len(sys.argv)
     if howmany == 1:
@@ -156,6 +167,8 @@ if __name__ == '__main__':
     param = sys.argv[1]
     list_pozos = read_info()
 
+    Thread(name='Scheduler cleaner', target=scheduler_cleaner_init, args=(list_pozos,)).start()
+
     if  param == '-n':
         routine_thread(list_pozos)
     elif param == '-e':
@@ -164,6 +177,8 @@ if __name__ == '__main__':
     elif param == '-g':
         seconds = sys.argv[2] if howmany == 3 and sys.argv[2] == int else 10
         routine_groups(list_pozos, seconds)
+    elif param =='-t':
+        pass
     else:
         print('Error de arranque: parametro no valido')
         print(man)

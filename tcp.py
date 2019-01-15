@@ -2,19 +2,17 @@ from pyModbusTCP.client import ModbusClient
 from datetime import timedelta as td
 from datetime import datetime as dt
 from subprocess import Popen, PIPE
+from enviroment import Address
 from threading import Thread
 import paho.mqtt.subscribe as subscribe
 import paho.mqtt.publish as publish
 import pyModbusTCP.utils as decoder
 import win_inet_pton
-import time, sched
-import json
-import socket
 import sqlite3
+import socket
+import time
+import json
 import os
-
-path = os.path.realpath(__file__)
-path = path[:path.find('tcp.py')]
 
 
 class EncodeToJson():
@@ -197,7 +195,7 @@ class EncodeToJson():
             name_compressor = self.__name+'_{}'.format(name_compressor)
             day = 24*3600
 
-            db = sqlite3.connect(path + 'enerflex.db', )
+            db = sqlite3.connect(Address.DATABASE_FOLDER, )
             c = db.cursor()
             sql = """SELECT startTime, limitTime, onlineTime, actualTime, isOnline FROM time_operation WHERE name = '{}'""".format(
                 name_compressor)
@@ -357,7 +355,6 @@ class ModbusTCP():
         self.how_many_null = 100
         self.json_ok = None
         self.status = [False]*15
-        self.isFirst = True
 
         self.sensors = 0
         self.sensors += 1 if id_ptp != None else 0
@@ -372,10 +369,11 @@ class ModbusTCP():
             ptp=id_ptp, ptr=id_ptr, pld=id_pld, ttp=id_ttp, onETM=get_etm)
 
         # Thread(name='Actions {}'.format(self._name), target=self.__subscribe_mqtt).start()
+        Thread(name='Backup {}'.format(self._name), target=self.__save_data_daily).start()
         
 
     def __create_table(self):
-        db = sqlite3.connect(path + 'enerflex.db', )
+        db = sqlite3.connect(Address.DATABASE_FOLDER, )
         c = db.cursor()
         sql = """CREATE TABLE IF NOT EXISTS {}('id' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,'name' TEXT NOT NULL,'time' NUMERIC,'date' NUMERIC,
             'ptp' NUMERIC, 'ptr' NUMERIC,'pld' NUMERIC,'ttp' NUMERIC, 'namecompresor_1' TEXT, 'etm_1' NUMERIC,'pr_1' NUMERIC, 'rpmp_1' NUMERIC,
@@ -557,7 +555,7 @@ class ModbusTCP():
                 elif not self._flg_unique:
                     # Leera en el texto
                     try:
-                        with open(path + 'data/br20_ip{}.txt'.format(self._ip.replace('.', '')), 'r+') as f:
+                        with open(Address.DATA_FOLDER + 'br20_ip{}.txt'.format(self._ip.replace('.', '')), 'r+') as f:
                             a = str(f.read())
                             a = a.replace('[', '').replace(']', '').split(',')
                             for i in range(0, len(a)):
@@ -596,14 +594,14 @@ class ModbusTCP():
             rb_info, rb_devices = [None]*10, [None]*20
 
         if len(rb_devices) > 20:
-            with open(path + 'data/br20_ip{}.txt'.format(self._ip.replace('.', '')), 'w+') as f:
+            with open(Address.DATA_FOLDER + 'br20_ip{}.txt'.format(self._ip.replace('.', '')), 'w+') as f:
                 f.write(str(rb_devices[20:]))
             time.sleep(0.1)
 
         return rb_info, rb_devices
 
     def run_once(self):
-        fecha, tiempo = dt.today().isoformat().split('T')
+        self.fecha, self.tiempo = dt.today().isoformat().split('T')
 
         t0 = time.time()
 
@@ -617,9 +615,9 @@ class ModbusTCP():
             #     self.cliente.unit_id(self.id_br20)
             #     rb_info, rb_devices = self.__routine_br20(self.cliente)
 
-            self._ecd.set_well(rb_devices, fecha, tiempo)
+            self._ecd.set_well(rb_devices, self.fecha, self.tiempo)
         else:
-            self._ecd.set_well(None, fecha, tiempo)
+            self._ecd.set_well(None, self.fecha, self.tiempo)
 
         t1 = time.time()
 
@@ -666,24 +664,19 @@ class ModbusTCP():
 
         # Title: Save in log
         if len(self._errors) > 0:
-            self.__save_log(self._ecd.get_system_errors(self._errors, fecha, tiempo))
+            self.__save_log(self._ecd.get_system_errors(self._errors, self.fecha, self.tiempo))
             self._errors[:] = []
 
         t6 = time.time()
 
-        self.__save_times(fecha, tiempo, [t1-t0, t2-t1, t3-t2, t5-t4, t6-t0])
+        self.__save_times([t1-t0, t2-t1, t3-t2, t5-t4, t6-t0])
         self.__validate_data(data_dict)
-
-        if self.isFirst:
-            Thread(name='Backup {}'.format(self._name), target=self.__save_data_daily, args=(fecha,)).start()
 
 
     def run_loop(self):
         while True:
             self.run_once()
             time.sleep(self._scanrate)
-            if self.isFirst:
-                self.isFirst = False
 
     def print_nice(self, errors):
         os.system('cls')
@@ -728,7 +721,7 @@ class ModbusTCP():
 
     def update_status_connection(self):
         try:
-            db = sqlite3.connect(path + 'enerflex.db', )
+            db = sqlite3.connect(Address.DATABASE_FOLDER, )
             c = db.cursor()
 
             tmp = list()
@@ -749,7 +742,7 @@ class ModbusTCP():
 
     def __save_in_db(self, table):
         try:
-            db = sqlite3.connect(path + 'enerflex.db', )
+            db = sqlite3.connect(Address.DATABASE_FOLDER, )
             c = db.cursor()
             data = self._ecd.get_lineal_dict()
             var = tuple(data.keys())
@@ -806,24 +799,22 @@ class ModbusTCP():
             self.how_many_null = nulls
             self.json_ok = data
 
-
     def __save_data(self, data):
-        with open(path + 'data/data_{}.txt'.format(self._name), 'a+') as f:
+        with open(Address.DATA_FOLDER + 'data_{}.txt'.format(self._name), 'a+') as f:
             f.write(str(data)+'\n')
 
-    def __save_data_daily(self, fecha):
+    def __save_data_daily(self):
         while True:
             time.sleep(5*60)
             if self.json_ok != None:
                 self.json_ok = json.dumps(self.json_ok)
-                with open(path + 'backup/bc{}_{}.txt'.format(fecha.replace('-', ''), self._name), 'a+') as f:
+                with open(Address.BACKUP_DAILY_FOLDER +'bc{}_{}.txt'.format(self.fecha.replace('-', ''), self._name), 'a+') as f:
                     f.write(str(self.json_ok)+'\n')
             self.how_many_null = 100
             self.json_ok = None
         
-
     def __save_log(self, data):
-        with open(path + 'logs/log_{}.txt'.format(self._name), 'a+') as f:
+        with open(Address.LOGS_FOLDER + 'log_{}.txt'.format(self._name), 'a+') as f:
             f.write(str(data)+'\n')
 
     def __isEnableWifi(self):
@@ -835,13 +826,11 @@ class ModbusTCP():
         else:
             return False
 
-    def __save_times(self, fecha, tiempo, data):
-        # spath = os.path.join(path, 'logs/time_{}.txt'.format(self._name))
-        # spath = os.path.abspath(path)
-        with open(path + 'logs/time_{}.txt'.format(self._name), 'a+') as f:
+    def __save_times(self, data):
+        with open(Address.LOGS_FOLDER + 'time_{}.txt'.format(self._name), 'a+') as f:
             f.write(
                 'FECHA {} {} | PLC1: {:.4f} | BR20: {:.4f} | PLC2: {:.4f} | Mqtt: {:.4f} | TOTAL: {:.4f}\n'.format(
-                    fecha, tiempo, data[0], data[1], data[2], data[3], data[4]
+                    self.fecha, self.tiempo, data[0], data[1], data[2], data[3], data[4]
                 ))
 
 

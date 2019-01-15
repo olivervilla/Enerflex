@@ -1,7 +1,8 @@
 *.db
 *.zip
-*.pyc
 backup/
 data/
 logs/
 init.json
+enerflex.db-journal
+*.pyc

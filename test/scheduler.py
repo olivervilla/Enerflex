@@ -15,7 +15,7 @@ class Testeo():
 
     def launch_scheduler(self):
         schedule.every(20).seconds.do(self.task_to_do)
-        schedule.every(5).minutes.do(self.task_to_do)
+        # schedule.every(5).minutes.do(self.task_to_do)
 
         while(True):
             schedule.run_pending()
@@ -34,5 +34,4 @@ class Testeo():
 if __name__ == '__main__':
     mTest = Testeo('Prueba')
     mTest.main_loop()
-
     
